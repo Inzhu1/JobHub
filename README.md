@@ -11,7 +11,7 @@ The system supports two types of users: employers and job seekers.
 
 * Aitakhun Inzhu
 * Ussenbayeva Alua
-* Sarsenbay Nurdaulet
+* Serikbay Nurdaulet
 
 ---
 
