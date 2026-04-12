@@ -6,6 +6,7 @@
     </a>
     <div class="nav-links">
       <a routerLink="/jobs" class="nav-link">Jobs</a>
+      <a *ngIf="getRole() === 'employer'" routerLink="/my-applications" class="nav-link">My Applications</a>
       <a *ngIf="!isLoggedIn()" routerLink="/login" class="nav-link">Login</a>
       <a *ngIf="!isLoggedIn()" routerLink="/register" class="btn-signup">Sign up</a>
       <div *ngIf="isLoggedIn()" class="user-menu">

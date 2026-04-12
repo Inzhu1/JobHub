@@ -61,4 +61,8 @@ export class ApplicationFormComponent implements OnInit {
       }
     });
   }
+
+  goBack(): void {
+    this.router.navigate(['/jobs']);
+  }
 }

@@ -1,0 +1,52 @@
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+h2 {
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+.application-card {
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.application-card h3 {
+  color: #2563EB;
+  margin-bottom: 0.5rem;
+}
+
+.cover-letter {
+  background: #F3F4F6;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.status-pending {
+  color: #D97706;
+  font-weight: bold;
+}
+
+.status-accepted {
+  color: #10B981;
+  font-weight: bold;
+}
+
+.status-rejected {
+  color: #EF4444;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  padding: 1rem;
+  background: #FEE2E2;
+  border-radius: 0.5rem;
+}

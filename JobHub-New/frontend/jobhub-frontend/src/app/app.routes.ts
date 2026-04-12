@@ -5,6 +5,7 @@ import { RegisterComponent } from './register/register';
 import { JobListComponent } from './job-list/job-list';
 import { JobFormComponent } from './job-form/job-form';
 import { ApplicationFormComponent } from './application-form/application-form';
+import { EmployerApplicationsComponent } from './employer-applications/employer-applications';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'jobs/new', component: JobFormComponent, canActivate: [AuthGuard] },
   { path: 'jobs/edit/:id', component: JobFormComponent, canActivate: [AuthGuard] },
   { path: 'apply/:jobId', component: ApplicationFormComponent, canActivate: [AuthGuard] },
+  { path: 'my-applications', component: EmployerApplicationsComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '' }
 ];

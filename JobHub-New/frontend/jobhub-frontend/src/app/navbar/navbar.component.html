@@ -1,0 +1,14 @@
+<nav class="navbar">
+    <div class="nav-brand">
+      <a routerLink="/jobs">💼 JobHub</a>
+    </div>
+    <div class="nav-menu">
+      <a routerLink="/jobs">Jobs</a>
+      <a *ngIf="getRole() === 'employer'" routerLink="/jobs/new">Post Job</a>
+      <a *ngIf="getRole() === 'seeker'" routerLink="/my-applications">My Applications</a>
+      <span class="user-info" *ngIf="isLoggedIn()">
+        Welcome, {{ getUsername() }}
+        <button (click)="logout()" class="logout-btn">Logout</button>
+      </span>
+    </div>
+  </nav>

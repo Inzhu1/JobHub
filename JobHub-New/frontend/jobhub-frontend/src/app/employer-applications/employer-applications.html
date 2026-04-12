@@ -1,0 +1,22 @@
+<div class="container">
+  <h2>Applications to my jobs</h2>
+  
+  <div *ngIf="loading">Loading...</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  
+  <div *ngIf="!loading && applications.length === 0">
+    No applications yet.
+  </div>
+  
+  <div *ngFor="let app of applications" class="application-card">
+    <h3>{{ app.job_title }}</h3>
+    <p><strong>Applicant:</strong> {{ app.applicant_name }} ({{ app.applicant_email }})</p>
+    <p><strong>Phone:</strong> {{ app.applicant_phone || 'Not provided' }}</p>
+    <p><strong>Applied:</strong> {{ app.applied_at | date:'medium' }}</p>
+    <p><strong>Cover Letter:</strong></p>
+    <div class="cover-letter">{{ app.cover_letter || 'No cover letter' }}</div>
+    <p><strong>Status:</strong> 
+      <span [class]="'status-' + app.status">{{ app.status }}</span>
+    </p>
+  </div>
+</div>

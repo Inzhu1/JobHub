@@ -1,1 +1,33 @@
-<p>application-form works!</p>
+<div class="container">
+  <h2>Apply for {{ job?.title }}</h2>
+  <p><strong>{{ job?.company }}</strong> - {{ job?.location }}</p>
+  
+  <div *ngIf="successMessage" style="color: green; padding: 10px; background: #d4edda; border-radius: 5px;">
+    {{ successMessage }}
+  </div>
+  
+  <div *ngIf="errorMessage" style="color: red; padding: 10px; background: #f8d7da; border-radius: 5px;">
+    {{ errorMessage }}
+  </div>
+  
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label>Cover Letter:</label>
+      <textarea 
+        [(ngModel)]="coverLetter" 
+        name="coverLetter" 
+        rows="6"
+        style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;"
+        placeholder="Tell us why you're a good fit..."></textarea>
+    </div>
+    
+    <div style="margin-top: 20px;">
+      <button type="submit" style="background: #2563EB; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
+        Submit Application
+      </button>
+      <button type="button" (click)="goBack()" style="background: #ccc; color: black; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
