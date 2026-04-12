@@ -7,10 +7,11 @@
       <input 
         type="text" 
         [(ngModel)]="searchQuery" 
+        (input)="searchJobs()"
         placeholder="Search by title, company, or keyword..."
         class="search-input"
       >
-      <button class="btn-search">Search</button>
+      <button class="btn-search" (click)="searchJobs()">Search</button>
     </div>
   </div>
 </div>
@@ -19,25 +20,31 @@
   <section class="categories">
     <h2 class="section-title">Browse by <span class="gradient-text">Category</span></h2>
     <div class="categories-grid">
-      <div *ngFor="let cat of categories" class="category-card">
-        <div class="category-icon">{{ cat.icon }}</div>
+      <div *ngFor="let cat of categories" class="category-card" (click)="filterByCategory(cat.name)">
+        <div class="category-icon">📁</div>
         <h3 class="category-name">{{ cat.name }}</h3>
-        <p class="category-count">{{ cat.count }} openings</p>
+        <p class="category-count">Browse jobs</p>
       </div>
     </div>
+    <button *ngIf="selectedCategory" class="btn-clear" (click)="clearFilters()">Clear filters</button>
   </section>
 
   <section class="jobs">
     <h2 class="section-title">Featured <span class="gradient-text">Opportunities</span></h2>
+    
+    <div *ngIf="filteredJobs.length === 0" class="no-results">
+      <p>No jobs found. Try different search terms.</p>
+    </div>
+    
     <div class="jobs-grid">
-      <div *ngFor="let job of featuredJobs" class="job-card">
+      <div *ngFor="let job of filteredJobs.slice(0,6)" class="job-card">
         <div class="job-card-header">
           <h3 class="job-title">{{ job.title }}</h3>
-          <span class="job-type">{{ job.type }}</span>
+          <span class="job-type">{{ job.job_type }}</span>
         </div>
         <p class="job-company">{{ job.company }}</p>
         <p class="job-location">{{ job.location }}</p>
-        <p class="job-salary">{{ job.salary }}</p>
+        <p class="job-salary">💰 ${{ job.salary_min }} - ${{ job.salary_max }}</p>
         <button class="btn-apply" routerLink="/register">Apply Now</button>
       </div>
     </div>
