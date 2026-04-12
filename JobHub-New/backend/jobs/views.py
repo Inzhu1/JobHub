@@ -116,3 +116,32 @@ class CurrentUserView(APIView):
             'company_name': user.company_name,
             'phone': user.phone
         })
+
+# ========== Employer View Applications ==========
+class EmployerApplicationsView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        # Проверяем что пользователь - работодатель
+        if request.user.role != 'employer':
+            return Response({"error": "Only employers can view applications"}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Получаем все вакансии работодателя
+        jobs = Job.objects.filter(employer=request.user)
+        
+        # Собираем отклики на эти вакансии
+        applications = []
+        for job in jobs:
+            for app in job.applications.all():
+                applications.append({
+                    'id': app.id,
+                    'job_title': job.title,
+                    'applicant_name': app.applicant.username,
+                    'applicant_email': app.applicant.email,
+                    'applicant_phone': app.applicant.phone,
+                    'cover_letter': app.cover_letter,
+                    'status': app.status,
+                    'applied_at': app.applied_at
+                })
+        
+        return Response(applications)
