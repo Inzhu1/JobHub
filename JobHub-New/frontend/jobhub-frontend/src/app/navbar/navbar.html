@@ -1,0 +1,17 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <a routerLink="/" class="logo">
+      <span class="logo-icon">💼</span>
+      <span class="logo-text">JobHub</span>
+    </a>
+    <div class="nav-links">
+      <a routerLink="/jobs" class="nav-link">Jobs</a>
+      <a *ngIf="!isLoggedIn()" routerLink="/login" class="nav-link">Login</a>
+      <a *ngIf="!isLoggedIn()" routerLink="/register" class="btn-signup">Sign up</a>
+      <div *ngIf="isLoggedIn()" class="user-menu">
+        <span class="user-name">{{ getUsername() }}</span>
+        <button (click)="logout()" class="btn-logout">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>

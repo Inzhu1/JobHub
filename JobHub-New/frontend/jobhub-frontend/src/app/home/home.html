@@ -1,0 +1,80 @@
+<div class="hero">
+  <div class="container">
+    <h1 class="hero-title">Find your <span class="gradient">internship</span> or <span class="gradient">job</span></h1>
+    <p class="hero-subtitle">Discover thousands of opportunities from top companies worldwide</p>
+    
+    <div class="search-container">
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery" 
+        placeholder="Search by title, company, or keyword..."
+        class="search-input"
+      >
+      <button class="btn-search">Search</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <section class="categories">
+    <h2 class="section-title">Browse by <span class="gradient-text">Category</span></h2>
+    <div class="categories-grid">
+      <div *ngFor="let cat of categories" class="category-card">
+        <div class="category-icon">{{ cat.icon }}</div>
+        <h3 class="category-name">{{ cat.name }}</h3>
+        <p class="category-count">{{ cat.count }} openings</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="jobs">
+    <h2 class="section-title">Featured <span class="gradient-text">Opportunities</span></h2>
+    <div class="jobs-grid">
+      <div *ngFor="let job of featuredJobs" class="job-card">
+        <div class="job-card-header">
+          <h3 class="job-title">{{ job.title }}</h3>
+          <span class="job-type">{{ job.type }}</span>
+        </div>
+        <p class="job-company">{{ job.company }}</p>
+        <p class="job-location">{{ job.location }}</p>
+        <p class="job-salary">{{ job.salary }}</p>
+        <button class="btn-apply" routerLink="/register">Apply Now</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span class="logo-icon">💼</span>
+        <span class="logo-text">JobHub</span>
+        <p class="footer-description">Connecting talent with opportunity</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-column">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="#">Careers</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <a href="#">Help Center</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <a href="#">Email: hello@jobhub.com</a>
+          <a href="#">Twitter: @jobhub</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 JobHub. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

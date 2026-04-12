@@ -1,0 +1,69 @@
+<div class="form-container">
+  <div class="form-card">
+    <h2>{{ isEditMode ? 'Edit Job' : 'Post New Job' }}</h2>
+    
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Job Title*</label>
+        <input type="text" [(ngModel)]="job.title" name="title" required>
+      </div>
+
+      <div class="form-group">
+        <label>Company*</label>
+        <input type="text" [(ngModel)]="job.company" name="company" required>
+      </div>
+
+      <div class="form-group">
+        <label>Location*</label>
+        <input type="text" [(ngModel)]="job.location" name="location" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Min Salary*</label>
+          <input type="number" [(ngModel)]="job.salary_min" name="salary_min" required>
+        </div>
+        <div class="form-group">
+          <label>Max Salary*</label>
+          <input type="number" [(ngModel)]="job.salary_max" name="salary_max" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Job Type*</label>
+        <select [(ngModel)]="job.job_type" name="job_type">
+          <option value="full_time">Full Time</option>
+          <option value="part_time">Part Time</option>
+          <option value="internship">Internship</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Category*</label>
+        <select [(ngModel)]="job.category" name="category">
+          <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description*</label>
+        <textarea [(ngModel)]="job.description" name="description" rows="6" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="job.is_active" name="is_active">
+          Active (visible to job seekers)
+        </label>
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="btn-submit">{{ isEditMode ? 'Update Job' : 'Create Job' }}</button>
+        <button type="button" class="btn-cancel" (click)="goBack()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="register-container">
+  <div class="register-card">
+    <h2>Register for JobHub</h2>
+    <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Username*</label>
+        <input type="text" [(ngModel)]="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label>Email*</label>
+        <input type="email" [(ngModel)]="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label>Password*</label>
+        <input type="password" [(ngModel)]="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label>I am a:*</label>
+        <select [(ngModel)]="role" name="role">
+          <option value="seeker">Job Seeker</option>
+          <option value="employer">Employer</option>
+        </select>
+      </div>
+      <div class="form-group" *ngIf="role === 'employer'">
+        <label>Company Name</label>
+        <input type="text" [(ngModel)]="company_name" name="company_name">
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="tel" [(ngModel)]="phone" name="phone">
+      </div>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a routerLink="/login">Login here</a></p>
+  </div>
+</div>

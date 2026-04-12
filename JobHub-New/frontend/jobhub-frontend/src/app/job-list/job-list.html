@@ -1,0 +1,33 @@
+<div class="job-list-container">
+  <h2>Available Jobs & Internships</h2>
+  
+  <div *ngIf="loading" class="loading">Loading jobs...</div>
+  <div *ngIf="!loading && errorMessage" class="error-message">{{ errorMessage }}</div>
+  <div *ngIf="!loading && jobs.length === 0" class="no-jobs">No jobs found. Create your first job!</div>
+  
+  <div class="job-grid">
+    <div *ngFor="let job of jobs" class="job-card">
+      <h3>{{ job.title }}</h3>
+      <p class="company">{{ job.company }} - {{ job.location }}</p>
+      <p class="salary">💰 ${{ job.salary_min }} - ${{ job.salary_max }}</p>
+      <p class="type">📋 {{ job.job_type }}</p>
+      <p class="description">{{ job.description | slice:0:100 }}...</p>
+      
+      <!-- Кнопка Apply для соискателя -->
+      <button *ngIf="getRole() === 'seeker'" class="btn-apply" (click)="applyToJob(job.id!)">
+        Apply Now
+      </button>
+      
+      <!-- Кнопки Edit/Delete для работодателя -->
+      <div *ngIf="getRole() === 'employer'" class="action-buttons">
+        <button class="btn-edit" (click)="editJob(job.id!)">✏️ Edit</button>
+        <button class="btn-delete" (click)="deleteJob(job.id!)">🗑️ Delete</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Кнопка создания вакансии для работодателя -->
+  <button *ngIf="getRole() === 'employer'" class="btn-create" (click)="createJob()">
+    + Post New Job
+  </button>
+</div>
