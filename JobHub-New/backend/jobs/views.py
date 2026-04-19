@@ -145,3 +145,36 @@ class EmployerApplicationsView(APIView):
                 })
         
         return Response(applications)
+
+# ========== Update Application Status (для работодателя) ==========
+class UpdateApplicationStatusView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def patch(self, request, application_id):
+        # Проверяем что пользователь - работодатель
+        if request.user.role != 'employer':
+            return Response({"error": "Only employers can update application status"}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Получаем отклик
+        try:
+            application = Application.objects.get(id=application_id)
+        except Application.DoesNotExist:
+            return Response({"error": "Application not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Проверяем что отклик относится к вакансии этого работодателя
+        if application.job.employer != request.user:
+            return Response({"error": "You can only update applications for your own jobs"}, status=status.HTTP_403_FORBIDDEN)
+        
+        # Обновляем статус
+        new_status = request.data.get('status')
+        if new_status not in ['pending', 'accepted', 'rejected', 'interview']:
+            return Response({"error": "Invalid status. Allowed: pending, accepted, rejected, interview"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        application.status = new_status
+        application.save()
+        
+        return Response({
+            'id': application.id,
+            'status': application.status,
+            'message': f'Application status updated to {new_status}'
+        })

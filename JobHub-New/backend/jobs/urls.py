@@ -9,4 +9,5 @@ urlpatterns = [
     path('applications/', views.ApplicationCreateView.as_view(), name='applications'),
     path('users/me/', views.CurrentUserView.as_view(), name='current-user'),
     path('employer/applications/', views.EmployerApplicationsView.as_view(), name='employer-applications'),
+    path('applications/<int:application_id>/status/', views.UpdateApplicationStatusView.as_view(), name='update-application-status'),
 ]
