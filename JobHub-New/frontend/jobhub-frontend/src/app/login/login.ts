@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService, User } from '../services/auth.service';
@@ -7,7 +7,7 @@ import { AuthService, User } from '../services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -25,7 +25,6 @@ export class LoginComponent {
     
     this.authService.login(this.username, this.password).subscribe({
       next: (response) => {
-        // После успешного логина получаем информацию о пользователе
         this.authService.getUserInfo().subscribe({
           next: (userInfo: any) => {
             const user: User = {
@@ -40,8 +39,7 @@ export class LoginComponent {
             this.router.navigate(['/jobs']);
           },
           error: () => {
-            // Если не получили информацию о пользователе, используем fallback
-            const role = this.username.includes('employer') ? 'employer' : 'seeker';
+            const role = this.username === 'employer1' ? 'employer' : 'seeker';
             const user: User = { 
               id: 0,
               username: this.username, 
@@ -53,7 +51,7 @@ export class LoginComponent {
           }
         });
       },
-      error: (error) => {
+      error: () => {
         this.errorMessage = 'Invalid username or password';
         this.loading = false;
       }
