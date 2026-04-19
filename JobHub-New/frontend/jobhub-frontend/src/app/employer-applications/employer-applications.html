@@ -1,22 +1,57 @@
 <div class="container">
-  <h2>Applications to my jobs</h2>
+  <h2>📋 Applications to my jobs</h2>
   
-  <div *ngIf="loading">Loading...</div>
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <div *ngIf="loading" class="loading">Loading...</div>
   
-  <div *ngIf="!loading && applications.length === 0">
-    No applications yet.
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+  
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  
+  <div *ngIf="!loading && applications.length === 0" class="no-applications">
+    No applications yet. When seekers apply to your jobs, they will appear here.
   </div>
   
   <div *ngFor="let app of applications" class="application-card">
-    <h3>{{ app.job_title }}</h3>
-    <p><strong>Applicant:</strong> {{ app.applicant_name }} ({{ app.applicant_email }})</p>
-    <p><strong>Phone:</strong> {{ app.applicant_phone || 'Not provided' }}</p>
-    <p><strong>Applied:</strong> {{ app.applied_at | date:'medium' }}</p>
-    <p><strong>Cover Letter:</strong></p>
-    <div class="cover-letter">{{ app.cover_letter || 'No cover letter' }}</div>
-    <p><strong>Status:</strong> 
-      <span [class]="'status-' + app.status">{{ app.status }}</span>
-    </p>
+    <div class="application-header">
+      <h3>{{ app.job_title }}</h3>
+      <span [class]="getStatusClass(app.status)">{{ getStatusText(app.status) }}</span>
+    </div>
+    
+    <div class="applicant-info">
+      <p><strong>👤 Applicant:</strong> {{ app.applicant_name }}</p>
+      <p><strong>📧 Email:</strong> {{ app.applicant_email }}</p>
+      <p><strong>📞 Phone:</strong> {{ app.applicant_phone || 'Not provided' }}</p>
+      <p><strong>📅 Applied:</strong> {{ app.applied_at | date:'medium' }}</p>
+    </div>
+    
+    <div class="cover-letter">
+      <strong>💌 Cover Letter:</strong>
+      <p>{{ app.cover_letter || 'No cover letter provided' }}</p>
+    </div>
+    
+    <div class="action-buttons">
+      <button 
+        *ngIf="app.status === 'pending'" 
+        class="btn-interview" 
+        (click)="updateStatus(app.id, 'interview')">
+        📅 Schedule Interview
+      </button>
+      <button 
+        *ngIf="app.status === 'pending' || app.status === 'interview'" 
+        class="btn-accept" 
+        (click)="updateStatus(app.id, 'accepted')">
+        ✅ Accept
+      </button>
+      <button 
+        *ngIf="app.status === 'pending' || app.status === 'interview'" 
+        class="btn-reject" 
+        (click)="updateStatus(app.id, 'rejected')">
+        ❌ Reject
+      </button>
+    </div>
   </div>
 </div>

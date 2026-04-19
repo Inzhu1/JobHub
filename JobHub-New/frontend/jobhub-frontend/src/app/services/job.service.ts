@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Category {
@@ -51,7 +51,6 @@ export class JobService {
   }
 
   createJob(job: Job): Observable<Job> {
-    console.log('Creating job:', job);
     return this.http.post<Job>(`${this.apiUrl}/jobs/`, job);
   }
 
@@ -73,5 +72,9 @@ export class JobService {
 
   applyToJob(jobId: number, coverLetter: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/applications/`, { job_id: jobId, cover_letter: coverLetter });
+  }
+
+  updateApplicationStatus(applicationId: number, status: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/applications/${applicationId}/status/`, { status });
   }
 }

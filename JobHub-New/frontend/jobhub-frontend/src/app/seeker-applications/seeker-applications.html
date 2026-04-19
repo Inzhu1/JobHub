@@ -1,0 +1,74 @@
+<div class="container">
+  <h2>📌 My Applications</h2>
+  <p class="subtitle">Track the status of your job applications</p>
+  
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    Loading your applications...
+  </div>
+  
+  <div *ngIf="!loading && errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+  
+  <div *ngIf="!loading && applications.length === 0" class="no-applications">
+    <div class="empty-state">
+      <span class="empty-icon">📭</span>
+      <h3>No applications yet</h3>
+      <p>You haven't applied to any jobs yet. Go to <a routerLink="/jobs">Jobs</a> to find your next opportunity!</p>
+      <button routerLink="/jobs" class="btn-browse">Browse Jobs</button>
+    </div>
+  </div>
+  
+  <div *ngFor="let app of applications" class="application-card">
+    <div class="application-header">
+      <div class="job-info">
+        <h3>{{ app.job_title }}</h3>
+        <p class="company-name">{{ app.company_name || 'Company' }}</p>
+      </div>
+      <div class="status-badge" [class]="getStatusClass(app.status)">
+        <span class="status-icon">{{ getStatusIcon(app.status) }}</span>
+        {{ getStatusText(app.status) }}
+      </div>
+    </div>
+    
+    <div class="application-details">
+      <div class="detail-item">
+        <span class="detail-label">📅 Applied on:</span>
+        <span class="detail-value">{{ app.applied_at | date:'fullDate' }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">🕐 Applied at:</span>
+        <span class="detail-value">{{ app.applied_at | date:'shortTime' }}</span>
+      </div>
+      <div class="detail-item" *ngIf="app.cover_letter">
+        <span class="detail-label">💌 Cover Letter:</span>
+        <div class="cover-letter">{{ app.cover_letter }}</div>
+      </div>
+    </div>
+    
+    <div class="status-message" *ngIf="app.status === 'accepted'">
+      <div class="message-accepted">
+        🎉 Congratulations! The employer has accepted your application. They will contact you soon with next steps.
+      </div>
+    </div>
+    
+    <div class="status-message" *ngIf="app.status === 'interview'">
+      <div class="message-interview">
+        📅 Great news! The employer wants to schedule an interview with you. Check your email for details or wait for their contact.
+      </div>
+    </div>
+    
+    <div class="status-message" *ngIf="app.status === 'rejected'">
+      <div class="message-rejected">
+        😔 Unfortunately, the employer has decided to move forward with other candidates. Don't give up! Keep applying to other positions.
+      </div>
+    </div>
+    
+    <div class="status-message" *ngIf="app.status === 'pending'">
+      <div class="message-pending">
+        ⏳ Your application is pending review. The employer will review your application and get back to you soon.
+      </div>
+    </div>
+  </div>
+</div>
